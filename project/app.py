@@ -1,5 +1,6 @@
 from flask import Flask
 
+
 from project.usecases.apiController import ApiController
 from project.usecases.getLinha import SPTrans
 
@@ -11,7 +12,7 @@ def hello_world():
 
     api = SPTrans()
     response = api.getLinha('1189')
-    print(response.status_code)
+    # print(response.status_code)
     return str(response.text)
 
 
