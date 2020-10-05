@@ -1,19 +1,21 @@
 from flask import Flask
 
 from project.usecases.apiController import ApiController
+from project.usecases.getLinha import SPTrans
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+
+    api = SPTrans()
+    response = api.getLinha('1189')
+    print(response.status_code)
+    return str(response.text)
 
 
 if __name__ == '__main__':
-    #app.run()
+    app.run()
 
-    url = 'http://api.olhovivo.sptrans.com.br/v2.1'
-    apiController = ApiController(url)
-    response = apiController.handle()
-    print(response)
+

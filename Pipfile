@@ -6,8 +6,10 @@ verify_ssl = true
 [dev-packages]
 flake8 = "*"
 pytest = "*"
+requests-mock = "*"
 
 [packages]
+requests = "*"
 
 [requires]
 python_version = "3.8"
