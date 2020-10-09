@@ -1,0 +1,33 @@
+    {%  extends 'layout.html' %}
+
+    {% block body %}
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">SPTrans API</h1>
+            <p class="lead">This app starts streaming SPTrans API and publish it in kafka.</p>
+          </div>
+        </div>
+        <div class="col text-center">
+            <button id="btn1" type="button" class="btn btn-primary btn-lg">Start API</button>
+        </div>
+        <div class="container-md">
+            {{ result.text }}
+        </div>
+
+        <script>
+            function digaClick(){
+                alert('Click !!!');
+            }
+
+            // Guardar as referencias dos botoes
+            const btn1 = document.querySelector('#btn1');
+
+            // Executar funções
+            btn1.addEventListener('click', digaClick);
+            btn1.onclick = function(){
+                console.log(this.classList)
+
+            }
+        </script>
+
+    {% endblock %}
