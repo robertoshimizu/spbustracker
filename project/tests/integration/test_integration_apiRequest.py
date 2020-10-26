@@ -6,7 +6,7 @@ def test_SPTrans_acesso():
     assert response.status_code == 200
 
 def test_SPTrans_autenticacao():
-    with open('./params/sptrans.json') as json_file:
+    with open('/media/rober/HDD1/Git_Repo/Python/flaskKafkaSPTrans/project/params/sptrans.json') as json_file:
         data = json.load(json_file)
         token = data['key']
     s = requests.Session()
@@ -24,7 +24,7 @@ def test_SPTrans_linha_noauth():
 
 def test_SPTrans_linha_auth():
 
-    with open('./params/sptrans.json') as json_file:
+    with open('/media/rober/HDD1/Git_Repo/Python/flaskKafkaSPTrans/project/params/sptrans.json') as json_file:
         data = json.load(json_file)
         token = data['key']
 
