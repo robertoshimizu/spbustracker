@@ -1,25 +1,28 @@
 from flask import Flask
+from flask import stream_with_context
 from flask import render_template, Response
 import time
 
-from project.repository.kafka_repository import Kafka
 from project.usecases.getLinha import SPTrans
 
 app = Flask(__name__)
 
-def stream_api(kafka):
+def stream_api():
     i = 0
     api = SPTrans()
-
-    while i < 4:
+    while i < 20:
+        print(i)
         i += 1
-        time.sleep(1)
-        kafka.produce(api.getLinha('1189').text)
+        time.sleep(5)
+        yield api.getLinha('1189').text
 
+@app.route('/stream')
+@stream_with_context
+def stream():
+    return Response(stream_api(), mimetype='text/event-stream')
 
 @app.route('/')
-def index():
-
+def home():
     return render_template('index.html')
 
 @app.route('/sptrans')

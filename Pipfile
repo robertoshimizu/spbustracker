@@ -11,6 +11,11 @@ requests-mock = "*"
 [packages]
 requests = "*"
 pykafka = "*"
+flask = "*"
+flask-cors = "*"
+flask-sse = "*"
+gunicorn = "*"
+gevent = "*"
 
 [requires]
 python_version = "3.8"

@@ -27,6 +27,27 @@
                 console.log(this.classList)
 
             }
+
+            var source;
+            source = new EventSource('/stream',{withCredentials:false});
+            console.log('source: ' + source.url);
+            console.log('open: ' + source.OPEN);
+
+            source.onmessage = function(event) {
+              console.log("New message", event.data);
+              // will log 3 times for the data stream above
+            };
+
+            source.addEventListener("notice", function(e) {
+                console.log(e.data)
+            });
+            source.addEventListener("update", function(e) {
+                console.log(e.data)
+            });
+            source.addEventListener("message", function(e) {
+                console.log(e.data)
+            })
+
         </script>
 
     {% endblock %}

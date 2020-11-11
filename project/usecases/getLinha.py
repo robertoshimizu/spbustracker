@@ -13,7 +13,7 @@ class SPTrans(object):
 
     def getLinha(self, linha):
         curdir = os.getcwd()
-        print(curdir)
+        #print(curdir)
         with open('/media/rober/HDD1/Git_Repo/Python/flaskKafkaSPTrans/project/params/sptrans.json') as json_file:
             data = json.load(json_file)
             token = data['key']
