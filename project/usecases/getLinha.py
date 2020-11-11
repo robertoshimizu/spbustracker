@@ -1,6 +1,6 @@
 import json
 import requests
-# import os
+import os
 
 class SPTrans(object):
 
@@ -12,8 +12,9 @@ class SPTrans(object):
         return message
 
     def getLinha(self, linha):
-        # currentDirectory = os.getcwd()
-        with open('./project/params/sptrans.json') as json_file:
+        curdir = os.getcwd()
+        print(curdir)
+        with open('/media/rober/HDD1/Git_Repo/Python/flaskKafkaSPTrans/project/params/sptrans.json') as json_file:
             data = json.load(json_file)
             token = data['key']
         s = requests.Session()
