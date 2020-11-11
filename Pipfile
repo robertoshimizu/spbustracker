@@ -10,6 +10,7 @@ requests-mock = "*"
 
 [packages]
 requests = "*"
+pykafka = "*"
 
 [requires]
 python_version = "3.8"
