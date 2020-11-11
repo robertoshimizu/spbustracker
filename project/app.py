@@ -16,10 +16,8 @@ def stream_api():
         time.sleep(5)
         yield api.getLinha('1189').text
 
-
 @app.route('/')
 def index():
-
     return Response(stream_api(), mimetype='text/event-stream')
 
 @app.route('/sptrans')
