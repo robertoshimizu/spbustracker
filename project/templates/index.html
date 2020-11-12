@@ -11,6 +11,10 @@
             <button id="btn1" type="button" class="btn btn-primary btn-lg">Start API</button>
         </div>
         <div class="container-md">
+            <h3>Stream of data</h3>
+            <div id="list">
+
+            </div>
         </div>
 
         <script>
@@ -27,6 +31,33 @@
                 console.log(this.classList)
 
             }
+
+            var source;
+            source = new EventSource('/stream',{withCredentials:false});
+            console.log('source: ' + source.url);
+            console.log('open: ' + source.OPEN);
+
+            //source.onmessage = function(event) {
+              //console.log("New message", event.data);
+              // will log 3 times for the data stream above
+            //};
+
+            source.addEventListener("notice", function(e) {
+                console.log(e.data)
+            });
+            source.addEventListener("update", function(e) {
+                console.log(e.data)
+            });
+            source.addEventListener("message", function(e) {
+                const newElement = document.createElement('p');
+                const eventList = document.getElementById('list');
+
+                newElement.innerHTML = e.data;
+                eventList.appendChild(newElement);
+            })
+
+
+
         </script>
 
     {% endblock %}
