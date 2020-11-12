@@ -8,15 +8,11 @@ from project.usecases.getLinha import SPTrans
 app = Flask(__name__)
 
 def stream_api():
-    i = 0
     api = SPTrans()
-    while i < 20:
-        print(i)
-        i += 1
-        time.sleep(5)
-        api_response = api.getLinha('1189').text
-        print(api_response)
-        yield 'data: {}\n\n'.format(api_response)
+    time.sleep(10)
+    api_response = api.getLinha('1189').text
+    #print(api_response)
+    yield 'data: {}\n\n'.format(api_response)
 
 @app.route('/stream')
 @stream_with_context
