@@ -11,6 +11,10 @@
             <button id="btn1" type="button" class="btn btn-primary btn-lg">Start API</button>
         </div>
         <div class="container-md">
+            <h3>Stream of data</h3>
+            <div id="list">
+
+            </div>
         </div>
 
         <script>
@@ -45,8 +49,14 @@
                 console.log(e.data)
             });
             source.addEventListener("message", function(e) {
-                console.log(e.data)
+                const newElement = document.createElement('p');
+                const eventList = document.getElementById('list');
+
+                newElement.innerHTML = e.data;
+                eventList.appendChild(newElement);
             })
+
+
 
         </script>
 

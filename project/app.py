@@ -14,7 +14,9 @@ def stream_api():
         print(i)
         i += 1
         time.sleep(5)
-        yield api.getLinha('1189').text
+        api_response = api.getLinha('1189').text
+        print(api_response)
+        yield 'data: {}\n\n'.format(api_response)
 
 @app.route('/stream')
 @stream_with_context
