@@ -40,19 +40,27 @@
             source.addEventListener("update", function(e) {
                 console.log(e.data)
             });
+
+            var busMarkers = {};
             source.addEventListener("message", function(e) {
                 //const newElement = document.createElement('p');
                 //const eventList = document.getElementById('list');
                 //newElement.innerHTML = e.data;
                 //eventList.appendChild(newElement);
-                console.log(e.data);
+                //console.log(e.data);
                 obj = JSON.parse(e.data);
-                var busMarkers = {};
+
                 var linhas = obj.vs;
 
-                linhas.forEach((linha)=>{
-                    busMarkers[linha.p] = L.marker([linha.py, linha.px],{title: 'carro '+linha.p}).addTo(mymap);
+                //console.log(busMarkers);
 
+                linhas.forEach((linha)=>{
+                    if (busMarkers[linha.p] != null){
+                        //console.log(' nao nulo ');
+                        busMarkers[linha.p].remove();
+                    }
+                    busMarkers[linha.p] = L.marker([linha.py, linha.px],{title: 'carro '+linha.p});
+                    busMarkers[linha.p].addTo(mymap);
                 });
             }, false);
 
