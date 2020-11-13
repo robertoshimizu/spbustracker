@@ -10,7 +10,7 @@ app = Flask(__name__)
 def stream_api():
     api = SPTrans()
     time.sleep(10)
-    api_response = api.getLinha('1189').text
+    api_response = api.getLinha('33123').text
     #print(api_response)
     yield 'data: {}\n\n'.format(api_response)
 
