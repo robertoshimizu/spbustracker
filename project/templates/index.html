@@ -11,6 +11,7 @@
             <button id="btn1" type="button" class="btn btn-primary btn-lg">Start API</button>
         </div>
         <div class="container-md">
+        <div id="mapid" style="width:900px;height:500px"></div>
             <h3>Stream of data</h3>
             <div id="list">
 
@@ -32,6 +33,7 @@
 
             }
 
+            // Capturar o evento vindo do Flask / Stream
             var source;
             source = new EventSource('/stream',{withCredentials:false});
             console.log('source: ' + source.url);
@@ -54,9 +56,22 @@
 
                 newElement.innerHTML = e.data;
                 eventList.appendChild(newElement);
-            })
+            });
+
+            // Parametros do mapa, id=mapid
+
+            const mytoken = import('../params/params'); // token is protected
 
 
+            var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: mytoken.mapbox_token,
+            }).addTo(mymap);
 
         </script>
 
