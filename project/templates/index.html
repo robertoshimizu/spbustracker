@@ -1,37 +1,27 @@
     {%  extends 'layout.html' %}
 
     {% block body %}
-        <div class="jumbotron jumbotron-fluid">
-          <div class="container">
-            <h1 class="display-4">SPTrans API</h1>
-            <p class="lead">This app starts streaming SPTrans API and publish it in kafka.</p>
-          </div>
-        </div>
-        <div class="col text-center">
-            <button id="btn1" type="button" class="btn btn-primary btn-lg">Start API</button>
-        </div>
-        <div class="container-md">
-        <div id="mapid" style="width:900px;height:500px"></div>
-            <h3>Stream of data</h3>
-            <div id="list">
 
-            </div>
-        </div>
+        <h1 class="display-4">SPTrans API</h1>
+        <div id="mapid" style="width:900px;height:500px"></div>
+
 
         <script>
-            function digaClick(){
-                alert('Click !!!');
-            }
 
-            // Guardar as referencias dos botoes
-            const btn1 = document.querySelector('#btn1');
 
-            // Executar funções
-            btn1.addEventListener('click', digaClick);
-            btn1.onclick = function(){
-                console.log(this.classList)
+            //const mytoken = import('../params/params')
+                //.then(value => console.log('value:' + value))
+                //.catch(e => console.log(e)); // token is protected
 
-            }
+            const mymap = L.map('mapid').setView([-23.602422, -46.624105], 11);
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken:
+            }).addTo(mymap);
 
             // Capturar o evento vindo do Flask / Stream
             var source;
@@ -51,27 +41,24 @@
                 console.log(e.data)
             });
             source.addEventListener("message", function(e) {
-                const newElement = document.createElement('p');
-                const eventList = document.getElementById('list');
+                //const newElement = document.createElement('p');
+                //const eventList = document.getElementById('list');
+                //newElement.innerHTML = e.data;
+                //eventList.appendChild(newElement);
+                console.log(e.data);
+                obj = JSON.parse(e.data);
+                var busMarkers = {};
+                var linhas = obj.vs;
 
-                newElement.innerHTML = e.data;
-                eventList.appendChild(newElement);
-            });
+                linhas.forEach((linha)=>{
+                    busMarkers[linha.p] = L.marker([linha.py, linha.px],{title: 'carro '+linha.p}).addTo(mymap);
+
+                });
+            }, false);
 
             // Parametros do mapa, id=mapid
 
-            const mytoken = import('../params/params'); // token is protected
 
-
-            var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                maxZoom: 18,
-                id: 'mapbox/streets-v11',
-                tileSize: 512,
-                zoomOffset: -1,
-                accessToken: mytoken.mapbox_token,
-            }).addTo(mymap);
 
         </script>
 
