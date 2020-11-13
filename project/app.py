@@ -24,11 +24,8 @@ def home():
     return render_template('index.html')
 
 @app.route('/sptrans')
-def hello_world():
-    api = SPTrans()
-    response = api.getLinha('1189')
-    # print(response.status_code)
-    return str(response.text)
+def embed():
+    return render_template('frame.html')
 
 
 if __name__ == '__main__':
