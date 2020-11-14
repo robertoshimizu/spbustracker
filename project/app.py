@@ -18,7 +18,7 @@ def stream_allLines():
     api = SPTrans()
     time.sleep(10)
     api_response = api.getAllLinhas().text
-    print(api_response)
+    #print(api_response)
     yield 'data: {}\n\n'.format(api_response)
 
 @app.route('/oneline')
@@ -38,6 +38,10 @@ def home():
 @app.route('/sptrans')
 def embed():
     return render_template('frame.html')
+
+@app.route('/livetracker')
+def show():
+    return render_template('livetracker.html')
 
 
 if __name__ == '__main__':
