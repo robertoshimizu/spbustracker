@@ -21,12 +21,12 @@
                 id: 'mapbox/streets-v11',
                 tileSize: 512,
                 zoomOffset: -1,
-                accessToken:
+                accessToken: 'pk.eyJ1IjoicnNoaW1penViciIsImEiOiJja2hmaTJtNW8wY2xmMnZwY3k2dmN3MGFnIn0.bJBKqf6TJeX_-42NxWgR-A'
             }).addTo(mymap);
 
             // Capturar o evento vindo do Flask / Stream
             var source;
-            source = new EventSource('/stream',{withCredentials:false});
+            source = new EventSource('/oneline',{withCredentials:false});
             console.log('source: ' + source.url);
             console.log('open: ' + source.OPEN);
 

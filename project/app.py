@@ -7,17 +7,29 @@ from project.usecases.getLinha import SPTrans
 
 app = Flask(__name__)
 
-def stream_api():
+def stream_oneLine():
     api = SPTrans()
     time.sleep(10)
-    api_response = api.getLinha('33123').text
+    api_response = api.getLinha('32769').text
     #print(api_response)
     yield 'data: {}\n\n'.format(api_response)
 
-@app.route('/stream')
+def stream_allLines():
+    api = SPTrans()
+    time.sleep(10)
+    api_response = api.getAllLinhas().text
+    print(api_response)
+    yield 'data: {}\n\n'.format(api_response)
+
+@app.route('/oneline')
 @stream_with_context
 def stream():
-    return Response(stream_api(), mimetype='text/event-stream')
+    return Response(stream_oneLine(), mimetype='text/event-stream')
+
+@app.route('/alllines')
+@stream_with_context
+def streamAll():
+    return Response(stream_allLines(), mimetype='text/event-stream')
 
 @app.route('/')
 def home():
