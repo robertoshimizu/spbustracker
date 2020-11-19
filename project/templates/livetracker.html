@@ -2,8 +2,8 @@
 
     {% block body %}
 
-        <div class="bg-white">
-          <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+        <div class="bg-white m-4">
+          <div>
             <div class="text-center">
               <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">SPTrans API</h2>
               <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Sao Paulo Bus Line Live Tracker.</p>
@@ -12,8 +12,8 @@
           </div>
         </div>
 
-        <div style="padding: 12px;">
-            <div id="mapid" style="width:1600px;height:800px;margin-left: auto; margin-right: auto;"></div>
+        <div class="m-4 px-8 py-4 h-screen">
+            <div id="mapid" class="w-30 max-w-screen h-4/6 max-h-screen"></div>
         </div>
 
         <script>
@@ -24,10 +24,11 @@
                 //.catch(e => console.log(e)); // token is protected
 
             var token = '{{ token }}';
-            const mymap = L.map('mapid').setView([-23.602422, -46.624105], 15);
+            const mymap = L.map('mapid').setView([-23.550164466, -46.633664132], 16);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
+                minZoom: 14,
                 id: 'mapbox/streets-v11',
                 tileSize: 512,
                 zoomOffset: -1,
@@ -76,7 +77,7 @@
                         if (busMarkers[carro.p] != null){
                             busMarkers[carro.p].remove();
                         }
-                        busMarkers[carro.p] = L.marker([carro.py, carro.px],{title: 'carro '+carro.p});
+                        busMarkers[carro.p] = L.marker([carro.py, carro.px],{title: linha.c + '\n' + linha.lt0+ '\n' + linha.lt1});
                         busMarkers[carro.p].addTo(mymap);
 
                     });
