@@ -1,8 +1,17 @@
     {%  extends 'layout.html' %}
 
     {% block body %}
+        <!-- This example requires Tailwind CSS v2.0+ -->
+        <div class="bg-white">
+          <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
+            <div class="text-center">
+              <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">SPTrans API</h2>
+              <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Sao Paulo Bus Line Live Tracker.</p>
+              <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">Follow in real time the location of buses of a given line.</p>
+            </div>
+          </div>
+        </div>
 
-        <h1 class="display-6" style="text-align: center;padding: 10px">Live Tracker Bus Line</h1>
         <div style="padding: 12px;">
             <div id="mapid" style="width:1600px;height:800px;margin-left: auto; margin-right: auto;"></div>
         </div>
@@ -21,7 +30,7 @@
                 id: 'mapbox/streets-v11',
                 tileSize: 512,
                 zoomOffset: -1,
-                accessToken:
+                accessToken:'pk.eyJ1IjoicnNoaW1penViciIsImEiOiJja2hmaTJtNW8wY2xmMnZwY3k2dmN3MGFnIn0.bJBKqf6TJeX_-42NxWgR-A'
             }).addTo(mymap);
 
             // Capturar o evento vindo do Flask / Stream
