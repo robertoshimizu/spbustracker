@@ -1,8 +1,17 @@
 import json
 import requests
-import os
+from pathlib import Path
 
 class SPTrans(object):
+
+    def getApiToken(self):
+        p = Path('.')
+        lata = list(p.glob('**/params.json'))
+        q = lata[0]
+        with q.open() as json_file:
+            data = json.load(json_file)
+            token = data['sptrans']
+        return token
 
     def checkAcesso(self):
         message = 'Acesso negado'
@@ -12,15 +21,20 @@ class SPTrans(object):
         return message
 
     def getLinha(self, linha):
-        curdir = os.getcwd()
-        #print(curdir)
-        with open('/media/rober/HDD1/Git_Repo/Python/flaskKafkaSPTrans/project/params/sptrans.json') as json_file:
-            data = json.load(json_file)
-            token = data['key']
+        token = self.getApiToken()
+        s = requests.Session()
+        response = s.post('http://api.olhovivo.sptrans.com.br/v2.1/Login/Autenticar?token={token}'.format(token=token))
+        #print(response.cookies)
+        url = 'http://api.olhovivo.sptrans.com.br/v2.1/Posicao/Linha?codigoLinha={linha}'.format(linha=linha)
+        response = s.get(url)
+        return response
+
+    def getAllLinhas(self):
+        token = self.getApiToken()
         s = requests.Session()
         response = s.post('http://api.olhovivo.sptrans.com.br/v2.1/Login/Autenticar?token={token}'.format(token=token))
         # print(response.cookies)
-        url = 'http://api.olhovivo.sptrans.com.br/v2.1/Posicao/Linha?codigoLinha={linha}'.format(linha=linha)
+        url = 'http://api.olhovivo.sptrans.com.br/v2.1/Posicao'
         response = s.get(url)
         return response
 

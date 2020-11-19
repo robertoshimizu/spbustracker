@@ -2,13 +2,12 @@
 
     {% block body %}
 
-        <!-- This example requires Tailwind CSS v2.0+ -->
         <div class="bg-white">
           <div class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8">
             <div class="text-center">
               <h2 class="text-base font-semibold text-indigo-600 tracking-wide uppercase">SPTrans API</h2>
               <p class="mt-1 text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Sao Paulo Bus Line Live Tracker.</p>
-              <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">Follow in real time the location of buses of a given line.</p>
+              <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500">Follow in real time the location of All bus lines.</p>
             </div>
           </div>
         </div>
@@ -23,8 +22,9 @@
             //const mytoken = import('../params/params')
                 //.then(value => console.log('value:' + value))
                 //.catch(e => console.log(e)); // token is protected
+
             var token = '{{ token }}';
-            const mymap = L.map('mapid').setView([-23.602422, -46.624105], 13);
+            const mymap = L.map('mapid').setView([-23.602422, -46.624105], 15);
             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
@@ -36,7 +36,7 @@
 
             // Capturar o evento vindo do Flask / Stream
             var source;
-            source = new EventSource('/oneline',{withCredentials:false});
+            source = new EventSource('/alllines',{withCredentials:false});
             console.log('source: ' + source.url);
             console.log('open: ' + source.OPEN);
 
@@ -61,17 +61,29 @@
                 //console.log(e.data);
                 obj = JSON.parse(e.data);
 
-                var linhas = obj.vs;
+                //console.log(obj.l);
+
+                var linhas = obj.l;
 
                 //console.log(busMarkers);
 
                 linhas.forEach((linha)=>{
-                    if (busMarkers[linha.p] != null){
-                        //console.log(' nao nulo ');
-                        busMarkers[linha.p].remove();
-                    }
-                    busMarkers[linha.p] = L.marker([linha.py, linha.px],{title: 'carro '+linha.p});
-                    busMarkers[linha.p].addTo(mymap);
+
+                    //console.log(linha.c);
+                    var carros = linha.vs;
+                    //console.log(carros);
+                    carros.forEach((carro)=>{
+                        if (busMarkers[carro.p] != null){
+                            busMarkers[carro.p].remove();
+                        }
+                        busMarkers[carro.p] = L.marker([carro.py, carro.px],{title: 'carro '+carro.p});
+                        busMarkers[carro.p].addTo(mymap);
+
+                    });
+                    //    busMarkers[linha.p].remove();
+                    //}
+                    //busMarkers[linha.p] = L.marker([linha.py, linha.px],{title: 'carro '+linha.p});
+                    //busMarkers[linha.p].addTo(mymap);
                 });
             }, false);
 
