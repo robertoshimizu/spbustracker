@@ -44,7 +44,7 @@ def streamAll():
 
 @app.route('/')
 def home():
-    return render_template('index.html', token='mapbox_token()')
+    return render_template('index.html', token=mapbox_token())
 
 @app.route('/sptrans')
 def embed():
@@ -52,7 +52,7 @@ def embed():
 
 @app.route('/livetracker')
 def show():
-    return render_template('livetracker.html')
+    return render_template('livetracker.html', token=mapbox_token())
 
 
 if __name__ == '__main__':
